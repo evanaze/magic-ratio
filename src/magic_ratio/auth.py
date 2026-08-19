@@ -8,8 +8,8 @@ from databricks.sdk import WorkspaceClient
 from databricks.sdk.errors import DatabricksError
 
 from magic_ratio.config import (
-    ConfigError,
     SUPPORTED_AUTH_TYPES,
+    ConfigError,
     env_var_name,
     resolve_host,
 )

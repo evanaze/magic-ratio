@@ -5,9 +5,9 @@ from __future__ import annotations
 import pytest
 
 from magic_ratio.config import (
-    ConfigError,
     DEFAULT_ENV,
     SUPPORTED_ENVS,
+    ConfigError,
     default_auth_type,
     env_var_name,
     resolve_host,

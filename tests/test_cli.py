@@ -8,7 +8,7 @@ from magic_ratio.cli import main
 
 
 def invoke(*args: str) -> CliRunner.Result:
-    runner = CliRunner(mix_stderr=True)
+    runner = CliRunner()
     return runner.invoke(main, list(args))
 
 

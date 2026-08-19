@@ -61,10 +61,21 @@ def test_build_config_rejects_invalid_env() -> None:
         build_config("staging")
 
 
-def test_get_client_constructs_without_network(
+def test_get_client_passes_config_to_workspace_client(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    """Client construction is lazy; no OAuth/HTTP occurs until first API call."""
+    """WorkspaceClient is constructed with the resolved per-env config."""
     monkeypatch.setenv("MAGIC_RATIO_DEV_HOST", "https://dev.example.com")
-    client = get_client("dev")
-    assert client.config.host == "https://dev.example.com"
+
+    captured: dict[str, str] = {}
+
+    class StubClient:
+        def __init__(self, **kwargs: str) -> None:
+            captured.update(kwargs)
+
+    monkeypatch.setattr("magic_ratio.auth.WorkspaceClient", StubClient)
+    get_client("dev")
+    assert captured == {
+        "host": "https://dev.example.com",
+        "auth_type": "external-browser",
+    }
